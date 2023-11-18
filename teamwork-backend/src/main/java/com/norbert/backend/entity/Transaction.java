@@ -46,23 +46,18 @@ public class Transaction {
             inverseJoinColumns = @JoinColumn(name = "employee_id"))
     @JsonIdentityReference(alwaysAsId = true)
     @NotNull
-    @NotBlank
     private List<Employee> employees;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "order_type")
     @NotNull
-    @NotBlank
     private OrderType orderType;
 
     @JsonProperty("date")
     @NotNull
-    @NotBlank
     private LocalDateTime date;
 
     @JsonProperty("paid")
-    @NotNull
-    @NotBlank
     private Boolean paid;
 
 }

@@ -3,12 +3,16 @@ package com.norbert.backend.service;
 import com.norbert.backend.dao.DAO;
 import com.norbert.backend.dto.PaySalaryDTO;
 import com.norbert.backend.dto.TransactionDTO;
+import com.norbert.backend.entity.Employee;
 import com.norbert.backend.entity.Transaction;
+import com.norbert.backend.exception.BadRequestException;
 import com.norbert.backend.mapper.TransactionDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +26,13 @@ public class TransactionService {
     }
 
     public TransactionDTO save(Transaction transaction) {
+        Set<Long> employeeIds = new HashSet<>();
+
+        for (Employee employee : transaction.getEmployees()) {
+            if (!employeeIds.add(employee.getId())) {
+                    throw new BadRequestException("Employees must not have duplicate");
+            }
+        }
         transaction.setPaid(false);
         Transaction savedTransaction = transactionDAO.save(transaction);
         return transactionDTOMapper.apply(savedTransaction);
