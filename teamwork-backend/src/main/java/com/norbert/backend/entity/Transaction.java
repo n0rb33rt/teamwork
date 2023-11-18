@@ -1,0 +1,68 @@
+package com.norbert.backend.entity;
+
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Table(name = "transactions")
+@Entity(name = "Transactions")
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class Transaction {
+    @Id
+    @SequenceGenerator(
+            name = "transactions_id_seq",
+            sequenceName = "transactions_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "transactions_id_seq"
+    )
+    @Column(
+            name = "id",
+            updatable = false,
+            columnDefinition = "BIGINT"
+    )
+    private Long id;
+
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}
+    )
+    @JoinTable(
+            name = "transaction_employees",
+            joinColumns = @JoinColumn(name = "transaction_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    @JsonIdentityReference(alwaysAsId = true)
+    @NotNull
+    @NotBlank
+    private List<Employee> employees;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_type")
+    @NotNull
+    @NotBlank
+    private OrderType orderType;
+
+    @JsonProperty("date")
+    @NotNull
+    @NotBlank
+    private LocalDateTime date;
+
+    @JsonProperty("paid")
+    @NotNull
+    @NotBlank
+    private Boolean paid;
+
+}
