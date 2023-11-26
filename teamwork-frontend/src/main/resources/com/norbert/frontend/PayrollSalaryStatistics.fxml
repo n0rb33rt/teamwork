@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import java.net.URL?>
+<GridPane prefHeight="400" prefWidth="300"
+          xmlns="http://javafx.com/javafx/17.0.2-ea"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.norbert.frontend.controller.PayrollSalaryStatisticsController" >
+
+    <children>
+        <TableView id="tableView" fx:id="tableView" prefHeight="400" prefWidth="300">
+            <columns>
+                <TableColumn fx:id="employee" resizable="false" text="Employee" styleClass="centered" reorderable="false" prefWidth="200">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="employee"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="salary" resizable="false" text="Salary"  sortable="false" styleClass="centered" reorderable="false" prefWidth="100">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="salary"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+    </children>
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+</GridPane>

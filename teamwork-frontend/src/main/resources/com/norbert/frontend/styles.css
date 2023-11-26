@@ -1,0 +1,12 @@
+/* Hide horizontal scrollbar */
+.table-view .scroll-bar:horizontal,
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-opacity: 0;
+    -fx-padding: 0;
+}
+
+.centered {
+    -fx-alignment: CENTER;
+}
