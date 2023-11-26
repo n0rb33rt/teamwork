@@ -1,9 +1,7 @@
 package com.norbert.backend.controller;
 
-import com.norbert.backend.dto.PaySalaryDTO;
 import com.norbert.backend.dto.TransactionDTO;
 import com.norbert.backend.entity.Transaction;
-import com.norbert.backend.service.PaySalaryService;
 import com.norbert.backend.service.TransactionService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

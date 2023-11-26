@@ -1,12 +1,11 @@
 package com.norbert.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Table(name = "transactions")
@@ -53,7 +52,7 @@ public class Transaction {
 
     @JsonProperty("date")
     @NotNull
-    private LocalDateTime date;
+    private LocalDate date;
 
     @JsonProperty("paid")
     private Boolean paid;

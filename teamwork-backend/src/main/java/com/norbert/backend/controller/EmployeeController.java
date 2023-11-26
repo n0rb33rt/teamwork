@@ -27,7 +27,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/status/{id}")
-    public ResponseEntity<Void> toggleEmployeeWorkingStatus(@PathVariable("id")Long id){
+    public ResponseEntity<Void> toggleEmployeeWorkingStatus(@Valid @PathVariable("id")Long id){
         employeeService.toggleWorkingStatusById(id);
         return ResponseEntity.ok().build();
     }

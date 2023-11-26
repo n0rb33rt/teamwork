@@ -12,7 +12,7 @@ CREATE TABLE transactions
 (
     id         BIGSERIAL PRIMARY KEY,
     order_type VARCHAR(23) NOT NULL ,
-    date       TIMESTAMP NOT NULL ,
+    date       DATE NOT NULL ,
     paid       BOOLEAN NOT NULL
 );
 

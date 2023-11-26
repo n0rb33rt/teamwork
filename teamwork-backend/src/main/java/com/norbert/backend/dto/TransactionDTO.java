@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.norbert.backend.entity.OrderType;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +24,7 @@ public class TransactionDTO {
     private OrderType orderType;
 
     @JsonProperty("date")
-    private LocalDateTime date;
+    private LocalDate date;
 
     @Override
     public boolean equals(Object o) {
