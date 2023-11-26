@@ -3,7 +3,6 @@ package com.norbert.frontend.controller;
 
 import com.norbert.frontend.Application;
 import com.norbert.frontend.dialog.AlertDialog;
-import com.norbert.frontend.dialog.TransactionDialog;
 import com.norbert.frontend.entity.Employee;
 import com.norbert.frontend.entity.OrderType;
 import com.norbert.frontend.entity.PaySalary;
@@ -24,10 +23,11 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
 public class TransactionController {
+    private final static Image icon = new Image(Objects.requireNonNull(Application.class.getResourceAsStream("icon.png")));
+
     @FXML
     private TableView<Transaction> tableView;
 
@@ -48,6 +48,7 @@ public class TransactionController {
         try {
             ApiService.deleteTransaction(selectedTransaction.getId());
             handleRefreshButtonAction();
+            AlertDialog.showSuccessDialog("Success","Successfully deleted transaction with id " + selectedTransaction.getId());
         } catch (ApiServiceException e) {
             AlertDialog.showErrorDialog("API Service Error", "There was an error with the API service: " + e.getMessage());
         }
@@ -62,7 +63,6 @@ public class TransactionController {
     private void handleEmployeesButtonAction() throws IOException {
         FXMLLoader salaryStatisticsLoader = new FXMLLoader(Application.class.getResource("EmployeeView.fxml"));
         Stage stage = new Stage();
-        Image icon = new Image(Objects.requireNonNull(Application.class.getResourceAsStream("icon.png")));
         stage.getIcons().add(icon);
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -74,12 +74,10 @@ public class TransactionController {
     }
 
     @FXML
-    private ProgressBar progressBar;
-
-    @FXML
     private void handlePaySalaryButtonAction() {
         try {
             PaySalary paySalary = ApiService.paySalary();
+            AlertDialog.showSuccessDialog("Success","Successfully paid salary");
             showSalaryStatistics(paySalary);
             showTransactionStatistics(paySalary);
         } catch (IOException e) {
@@ -92,7 +90,6 @@ public class TransactionController {
     private void showSalaryStatistics(PaySalary paySalary) throws IOException {
         FXMLLoader salaryStatisticsLoader = new FXMLLoader(Application.class.getResource("PayrollSalaryStatistics.fxml"));
         Stage stage = new Stage();
-        Image icon = new Image(Objects.requireNonNull(Application.class.getResourceAsStream("icon.png")));
         stage.getIcons().add(icon);
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -108,7 +105,6 @@ public class TransactionController {
     private void showTransactionStatistics(PaySalary paySalary) throws IOException {
         FXMLLoader transactionStatisticsLoader = new FXMLLoader(Application.class.getResource("PayrollTransactionStatistics.fxml"));
         Stage stage = new Stage();
-        Image icon = new Image(Objects.requireNonNull(Application.class.getResourceAsStream("icon.png")));
         stage.getIcons().add(icon);
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);

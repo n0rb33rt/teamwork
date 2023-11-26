@@ -2,6 +2,7 @@ package com.norbert.frontend.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -14,13 +15,19 @@ public class Transaction{
     @JsonProperty("order_type")
     private OrderType orderType;
     @JsonProperty("date")
-    private LocalDateTime date;
+    private LocalDate date;
 
-    public Transaction(Long id, List<Employee> employees, OrderType orderType, LocalDateTime localDateTime) {
+    public Transaction(Long id, List<Employee> employees, OrderType orderType, LocalDate localDate) {
         this.id = id;
         this.employees = employees;
         this.orderType = orderType;
-        this.date = localDateTime;
+        this.date = localDate;
+    }
+
+    public Transaction(List<Employee> employees, OrderType orderType, LocalDate localDate) {
+        this.employees = employees;
+        this.orderType = orderType;
+        this.date = localDate;
     }
 
     public Transaction() {
@@ -38,9 +45,6 @@ public class Transaction{
         return orderType;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
 
     public Integer getPrice() {
         return orderType.getPrice();
@@ -58,18 +62,28 @@ public class Transaction{
         this.orderType = orderType;
     }
 
-    public void setDate(LocalDateTime date) {
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "id=" + id +
-                ", employees=" + employees +
-                ", orderType=" + orderType +
-                ", date=" + date +
-                '}';
+        return "{\n" +
+                "    \"date\": \""+ date +"\",\n" +
+                "    \"orderType\": \""+orderType+"\",\n" +
+                "    \"employees\": [\n" +
+                "        {   \n" +
+                "            \"id\":1\n" +
+                "        },\n" +
+                "{\n" +
+                "    \"id\":2\n" +
+                "}\n" +
+                "    ]\n" +
+                "}";
     }
 
     @Override

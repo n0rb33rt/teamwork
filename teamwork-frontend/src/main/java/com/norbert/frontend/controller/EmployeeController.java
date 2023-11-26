@@ -33,6 +33,7 @@ public class EmployeeController {
         try {
             ApiService.toggleEmployeeWorkingStatus(selectedEmployee.getId());
             handleRefreshButtonAction();
+            AlertDialog.showSuccessDialog("Success","Successfully hired/dismiss employee");
         } catch (ApiServiceException e) {
             AlertDialog.showErrorDialog("API Service Error", "There was an error with the API service: " + e.getMessage());
         }
@@ -50,6 +51,7 @@ public class EmployeeController {
     private void handleRefreshButtonAction() {
         try {
             tableView.setItems(FXCollections.observableList(ApiService.getAllEmployees()));
+            tableView.refresh();
         } catch (IOException e) {
             AlertDialog.showErrorDialog("Error loading FXML file", "There was an error loading the FXML file.");
         } catch (ApiServiceException e) {
