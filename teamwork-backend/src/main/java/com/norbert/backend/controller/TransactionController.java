@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/transaction")
 public class TransactionController {
     private final TransactionService transactionService;
-    private final PaySalaryService paySalary;
+
 
     @GetMapping
     public ResponseEntity<List<TransactionDTO>> getTransactions(){
@@ -39,10 +39,5 @@ public class TransactionController {
     public ResponseEntity<Void> updateTransaction(@RequestBody @Valid Transaction transaction){
         transactionService.update(transaction);
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/pay-salary")
-    public ResponseEntity<PaySalaryDTO> paySalary(){
-        return ResponseEntity.ok(paySalary.mockPaySalary());
     }
 }

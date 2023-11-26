@@ -1,6 +1,6 @@
 package com.norbert.backend.service;
 
-import com.norbert.backend.dao.DAO;
+import com.norbert.backend.dao.EmployeeDAO;
 import com.norbert.backend.entity.Employee;
 import com.norbert.backend.exception.BadRequestException;
 import com.norbert.backend.repository.EmployeeRepository;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class EmployeeJpaService implements DAO<Employee> {
+public class EmployeeJpaService implements EmployeeDAO{
     private final EmployeeRepository employeeRepository;
 
     @Override
@@ -25,10 +25,10 @@ public class EmployeeJpaService implements DAO<Employee> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void toggleWorkingStatusById(Long id) {
         if(!employeeRepository.existsById(id))
             throw new BadRequestException("The employee with id " + id+ " doesn't exist");
-        employeeRepository.deleteById(id);
+        employeeRepository.toggleWorkingStatus(id);
     }
 
     @Override

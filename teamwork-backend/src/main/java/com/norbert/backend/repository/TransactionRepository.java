@@ -15,6 +15,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     @Query("UPDATE Transactions t SET t.date = :#{#transaction.date}, t.orderType = :#{#transaction.orderType}, t.employees = :#{#transaction.employees} WHERE t.id = :#{#transaction.id}")
     void update(@Param("transaction") Transaction transaction);
 
-
+    @Query("SELECT t FROM Transactions t WHERE t.paid = false")
     List<Transaction> getTransactionsByPaidIsFalse();
 }

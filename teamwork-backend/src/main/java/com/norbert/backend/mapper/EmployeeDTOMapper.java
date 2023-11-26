@@ -15,6 +15,7 @@ public class EmployeeDTOMapper implements Function<Employee, EmployeeDTO> {
                 .lastName(employee.getLastName())
                 .email(employee.getEmail())
                 .cardNumber(employee.getCardNumber())
+                .working(employee.getWorking())
                 .build();
     }
 }

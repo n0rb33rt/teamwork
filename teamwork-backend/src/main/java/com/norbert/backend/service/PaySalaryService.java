@@ -1,13 +1,15 @@
 package com.norbert.backend.service;
 
+import com.norbert.backend.dto.EmployeeDTO;
 import com.norbert.backend.dto.PaySalaryDTO;
+import com.norbert.backend.dto.TransactionDTO;
 import com.norbert.backend.email.BuildingEmailMessageRequest;
 import com.norbert.backend.email.EmailBuilder;
 import com.norbert.backend.email.EmailSender;
 import com.norbert.backend.email.SendingEmailRequest;
-import com.norbert.backend.entity.Employee;
 import com.norbert.backend.entity.Transaction;
 import com.norbert.backend.exception.BadRequestException;
+import com.norbert.backend.mapper.TransactionDTOMapper;
 import com.norbert.backend.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,23 +18,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class PaySalaryService {
     private final TransactionRepository transactionRepository;
     private final EmailSender emailSender;
+    private final TransactionDTOMapper transactionDTOMapper;
 
     public PaySalaryDTO mockPaySalary() {
         List<Transaction> transactions = getTransactionsByPaidIsFalse();
         if (transactions.isEmpty())
             throw new BadRequestException("Nothing to pay");
+        List<TransactionDTO> transactionDTOS = transactions.stream().map(transactionDTOMapper).collect(Collectors.toList());
+        Map<EmployeeDTO, List<TransactionDTO>> employeeTransactionsMap = createEmployeeTransactionsMap(transactionDTOS);
 
-        Map<Employee, List<Transaction>> employeeTransactionsMap = createEmployeeTransactionsMap(transactions);
-        Map<Employee, Integer> employeeSalaryMap = calculateEmployeeSalaries(employeeTransactionsMap);
+        Map<EmployeeDTO, Double> employeeSalaryMap = calculateEmployeeSalaries(employeeTransactionsMap);
 
         sendSalaryEmails(employeeTransactionsMap, employeeSalaryMap);
 
+        transactions.forEach(transaction -> transaction.setPaid(true));
         updateTransactionsAsPaid(transactions);
 
         return PaySalaryDTO.builder()
@@ -41,43 +47,42 @@ public class PaySalaryService {
                 .build();
     }
 
-    private Map<Employee, List<Transaction>> createEmployeeTransactionsMap(List<Transaction> transactions) {
-        Map<Employee, List<Transaction>> employeeTransactionsMap = new HashMap<>();
-        for (Transaction transaction : transactions) {
-            List<Employee> employees = transaction.getEmployees();
-            for (Employee employee : employees) {
+    private Map<EmployeeDTO, List<TransactionDTO>> createEmployeeTransactionsMap(List<TransactionDTO> transactions) {
+        Map<EmployeeDTO, List<TransactionDTO>> employeeTransactionsMap = new HashMap<>();
+        for (TransactionDTO transaction : transactions) {
+            List<EmployeeDTO> employees = transaction.getEmployees();
+            for (EmployeeDTO employee : employees) {
                 employeeTransactionsMap.computeIfAbsent(employee, k -> new ArrayList<>());
                 employeeTransactionsMap.get(employee).add(transaction);
             }
-            transaction.setPaid(true);
         }
         return employeeTransactionsMap;
     }
 
-    private Map<Employee, Integer> calculateEmployeeSalaries(Map<Employee, List<Transaction>> employeeTransactionsMap) {
-        Map<Employee, Integer> employeeSalaryMap = new HashMap<>();
-        for (Map.Entry<Employee, List<Transaction>> entry : employeeTransactionsMap.entrySet()) {
-            Employee employee = entry.getKey();
-            List<Transaction> employeeTransactions = entry.getValue();
-            int salary = calculateSalary(employeeTransactions);
+    private Map<EmployeeDTO, Double> calculateEmployeeSalaries(Map<EmployeeDTO, List<TransactionDTO>> employeeTransactionsMap) {
+        Map<EmployeeDTO, Double> employeeSalaryMap = new HashMap<>();
+        for (Map.Entry<EmployeeDTO, List<TransactionDTO>> entry : employeeTransactionsMap.entrySet()) {
+            EmployeeDTO employee = entry.getKey();
+            List<TransactionDTO> employeeTransactions = entry.getValue();
+            double salary = calculateSalary(employeeTransactions);
             employeeSalaryMap.put(employee, salary);
         }
         return employeeSalaryMap;
     }
 
-    private int calculateSalary(List<Transaction> employeeTransactions) {
-        int salary = 0;
-        for (Transaction transaction : employeeTransactions) {
-            salary += transaction.getOrderType().getPrice() / transaction.getEmployees().size();
+    private double calculateSalary(List<TransactionDTO> employeeTransactions) {
+        double salary = 0;
+        for (TransactionDTO transaction : employeeTransactions) {
+            salary += (double) transaction.getOrderType().getPrice() / transaction.getEmployees().size();
         }
-        return salary / 2; // commission
+        return salary / 2.0; // commission
     }
 
-    private void sendSalaryEmails(Map<Employee, List<Transaction>> employeeTransactionsMap, Map<Employee, Integer> employeeSalaryMap) {
-        for (Map.Entry<Employee, List<Transaction>> entry : employeeTransactionsMap.entrySet()) {
-            Employee employee = entry.getKey();
-            List<Transaction> employeeTransactions = entry.getValue();
-            int salary = employeeSalaryMap.get(employee);
+    private void sendSalaryEmails(Map<EmployeeDTO, List<TransactionDTO>> employeeTransactionsMap, Map<EmployeeDTO, Double> employeeSalaryMap) {
+        for (Map.Entry<EmployeeDTO, List<TransactionDTO>> entry : employeeTransactionsMap.entrySet()) {
+            EmployeeDTO employee = entry.getKey();
+            List<TransactionDTO> employeeTransactions = entry.getValue();
+            double salary = employeeSalaryMap.get(employee);
 
             String message = EmailBuilder.buildPayrollMessage(new BuildingEmailMessageRequest(employee, employeeTransactions, salary));
             emailSender.send(new SendingEmailRequest(message, employee.getEmail(), "Check out your salary"));

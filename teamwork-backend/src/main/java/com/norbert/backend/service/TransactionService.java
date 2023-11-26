@@ -1,7 +1,7 @@
 package com.norbert.backend.service;
 
-import com.norbert.backend.dao.DAO;
-import com.norbert.backend.dto.PaySalaryDTO;
+import com.norbert.backend.dao.EmployeeDAO;
+import com.norbert.backend.dao.TransactionDAO;
 import com.norbert.backend.dto.TransactionDTO;
 import com.norbert.backend.entity.Employee;
 import com.norbert.backend.entity.Transaction;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class TransactionService {
-    private final DAO<Transaction> transactionDAO;
+    private final TransactionDAO transactionDAO;
     private final TransactionDTOMapper transactionDTOMapper;
 
     public List<TransactionDTO> getAll() {

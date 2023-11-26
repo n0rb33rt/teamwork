@@ -1,6 +1,6 @@
 package com.norbert.backend.email;
 
-import com.norbert.backend.entity.Transaction;
+import com.norbert.backend.dto.TransactionDTO;
 
 public class EmailBuilder {
     public static String buildPayrollMessage(BuildingEmailMessageRequest request) {
@@ -16,7 +16,7 @@ public class EmailBuilder {
                 .append("    Thank you for powerful work. Your salary is ").append(request.salary()).append(" UAN, was paid to the card ").append(request.employee().getCardNumber()).append(" <br><br>\n")
                 .append("    Work you have done: <br>\n");
 
-        for (Transaction transaction : request.transactions()) {
+        for (TransactionDTO transaction : request.transactions()) {
             messageBuilder.append("[").append(transaction.getDate()).append("] \"")
                     .append(transaction.getOrderType().getName()).append("\" ")
                     .append(transaction.getOrderType().getPrice()).append(" UAN done by ")

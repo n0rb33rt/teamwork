@@ -1,6 +1,6 @@
 package com.norbert.backend.service;
 
-import com.norbert.backend.dao.DAO;
+import com.norbert.backend.dao.EmployeeDAO;
 import com.norbert.backend.dto.EmployeeDTO;
 import com.norbert.backend.entity.Employee;
 import com.norbert.backend.mapper.EmployeeDTOMapper;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class EmployeeService {
-    private final DAO<Employee> employeeDAO;
+    private final EmployeeDAO employeeDAO;
 
     private final EmployeeDTOMapper employeeDTOMapper;
 
@@ -22,12 +22,13 @@ public class EmployeeService {
     }
 
     public EmployeeDTO save(Employee employee) {
+        employee.setWorking(true);
         Employee savedEmployee = employeeDAO.save(employee);
         return employeeDTOMapper.apply(savedEmployee);
     }
 
-    public void deleteById(Long id) {
-        employeeDAO.deleteById(id);
+    public void toggleWorkingStatusById(Long id) {
+        employeeDAO.toggleWorkingStatusById(id);
     }
 
     public void update(Employee employee) {

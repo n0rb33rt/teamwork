@@ -14,6 +14,11 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     @Query("UPDATE Employees t SET t.email= :#{#employee.email}, t.cardNumber = :#{#employee.cardNumber}, t.firstName = :#{#employee.firstName}, t.lastName = :#{#employee.lastName} WHERE t.id = :#{#employee.id}")
     void update(@Param("employee") Employee employee);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE Employees e SET e.working = CASE WHEN e.working = true THEN false ELSE true END WHERE e.id = :id")
+    void toggleWorkingStatus(@Param("id") Long id);
+
 
 
 }

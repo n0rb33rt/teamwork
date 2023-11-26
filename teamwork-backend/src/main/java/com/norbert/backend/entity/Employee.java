@@ -1,10 +1,14 @@
 package com.norbert.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
+
+import java.util.List;
 
 @Entity(name = "Employees")
 @Table(name = "employees")
@@ -50,11 +54,15 @@ public class Employee {
     @JsonProperty("card_number")
     @NotNull
     @NotBlank
+    @Pattern(regexp = "\\d{16}", message = "Card number must be 16 digits")
     private String cardNumber;
+
+    @JsonProperty("working")
+    private Boolean working;
 
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + "(" + id + ")";
+        return firstName + " " + lastName;
     }
 }

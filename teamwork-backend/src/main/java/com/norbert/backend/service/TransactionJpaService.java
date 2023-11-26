@@ -1,6 +1,7 @@
 package com.norbert.backend.service;
 
-import com.norbert.backend.dao.DAO;
+import com.norbert.backend.dao.EmployeeDAO;
+import com.norbert.backend.dao.TransactionDAO;
 import com.norbert.backend.entity.Transaction;
 import com.norbert.backend.exception.BadRequestException;
 import com.norbert.backend.repository.TransactionRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class TransactionJpaService implements DAO<Transaction> {
+public class TransactionJpaService implements TransactionDAO {
     private final TransactionRepository transactionRepository;
 
     @Override

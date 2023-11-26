@@ -26,9 +26,9 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.save(employee));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable("id")Long id){
-        employeeService.deleteById(id);
+    @PutMapping("/status/{id}")
+    public ResponseEntity<Void> toggleEmployeeWorkingStatus(@PathVariable("id")Long id){
+        employeeService.toggleWorkingStatusById(id);
         return ResponseEntity.ok().build();
     }
 
