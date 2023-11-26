@@ -9,7 +9,15 @@ import java.util.Objects;
 
 public class AlertDialog {
     public static void showErrorDialog(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        showAlert(Alert.AlertType.ERROR, title, content);
+    }
+
+    public static void showSuccessDialog(String title, String content) {
+        showAlert(Alert.AlertType.INFORMATION, title, content);
+    }
+
+    private static void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();

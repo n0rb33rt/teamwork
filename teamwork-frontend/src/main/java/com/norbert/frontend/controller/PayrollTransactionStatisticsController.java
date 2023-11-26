@@ -6,11 +6,9 @@ import com.norbert.frontend.entity.OrderType;
 import com.norbert.frontend.entity.Transaction;
 import javafx.fxml.FXML;
 
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,18 +17,6 @@ public class PayrollTransactionStatisticsController {
 
     @FXML
     private TableView<TransactionEntry> tableView;
-    @FXML
-    private TableColumn<TransactionEntry, Long> id;
-    @FXML
-    private TableColumn<TransactionEntry, String> employee;
-    @FXML
-    private TableColumn<TransactionEntry, List<Employee>> employees;
-    @FXML
-    private TableColumn<TransactionEntry, String> orderType;
-    @FXML
-    private TableColumn<TransactionEntry, Integer> price;
-    @FXML
-    private TableColumn<TransactionEntry, Date> date;
 
     private Map<String, List<Transaction>> employeeTransactionsMap;
 
@@ -62,7 +48,7 @@ public class PayrollTransactionStatisticsController {
         private final List<Employee> employees;
         private final OrderType orderType;
         private final Integer price;
-        private final LocalDateTime date;
+        private final LocalDate date;
 
         public TransactionEntry(
                 Long id,
@@ -70,7 +56,7 @@ public class PayrollTransactionStatisticsController {
                 List<Employee> employees,
                 OrderType orderType,
                 Integer price,
-                LocalDateTime date) {
+                LocalDate date) {
             this.id = id;
             this.employee = employee;
             this.employees = employees;
@@ -99,7 +85,7 @@ public class PayrollTransactionStatisticsController {
             return price;
         }
 
-        public LocalDateTime getDate() {
+        public LocalDate getDate() {
             return date;
         }
 
