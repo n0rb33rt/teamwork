@@ -2,7 +2,6 @@ package com.norbert.backend.service;
 
 import com.norbert.backend.dao.EmployeeDAO;
 import com.norbert.backend.dao.TransactionDAO;
-import com.norbert.backend.dto.EmployeeDTO;
 import com.norbert.backend.dto.TransactionDTO;
 import com.norbert.backend.entity.Employee;
 import com.norbert.backend.entity.Transaction;
@@ -33,9 +32,11 @@ public class TransactionService {
             if (!employeeIds.add(employee.getId()))
                     throw new BadRequestException("Employees must not have duplicate");
         }
+        if(employeeIds.isEmpty())
+            throw new BadRequestException("Employees must be present");
         List<Employee> employees = employeeDAO.getAll();
-        List<Long> existingEmployeeIds  = employees.stream().map(employee -> employee.getId()).collect(Collectors.toList());
-        if(!existingEmployeeIds.containsAll(employeeIds))
+        List<Long> existingEmployeeIds  = employees.stream().map(Employee::getId).toList();
+        if(!new HashSet<>(existingEmployeeIds).containsAll(employeeIds))
             throw new BadRequestException("One or more employees do not exist");
 
         employees.stream()
@@ -52,7 +53,4 @@ public class TransactionService {
         transactionDAO.deleteById(id);
     }
 
-    public void update(Transaction transaction){
-        transactionDAO.update(transaction);
-    }
 }

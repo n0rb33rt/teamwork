@@ -8,6 +8,4 @@ public interface TransactionDAO{
     List<Transaction> getAll();
     Transaction save(Transaction transaction);
     void deleteById(Long id);
-
-    void update(Transaction transaction);
 }

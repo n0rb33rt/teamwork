@@ -48,6 +48,7 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     @Column(name = "order_type")
     @NotNull
+    @JsonProperty("order_type")
     private OrderType orderType;
 
     @JsonProperty("date")

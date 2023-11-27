@@ -1,6 +1,5 @@
 package com.norbert.backend.service;
 
-import com.norbert.backend.dao.EmployeeDAO;
 import com.norbert.backend.dao.TransactionDAO;
 import com.norbert.backend.entity.Transaction;
 import com.norbert.backend.exception.BadRequestException;
@@ -31,13 +30,6 @@ public class TransactionJpaService implements TransactionDAO {
         if(!transactionRepository.existsById(id))
             throw new BadRequestException("The transaction with id " + id+ " doesn't exist");
         transactionRepository.deleteById(id);
-    }
-
-    @Override
-    public void update(Transaction transaction) {
-        if(!transactionRepository.existsById(transaction.getId()))
-            throw new BadRequestException("The transaction with id " + transaction.getId()+ " doesn't exist");
-        transactionRepository.update(transaction);
     }
 }
 
