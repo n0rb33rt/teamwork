@@ -32,10 +32,4 @@ public class TransactionController {
         transactionService.deleteById(id);
         return ResponseEntity.ok().build();
     }
-
-    @PutMapping
-    public ResponseEntity<Void> updateTransaction(@RequestBody @Valid Transaction transaction){
-        transactionService.update(transaction);
-        return ResponseEntity.ok().build();
-    }
 }

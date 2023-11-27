@@ -5,7 +5,9 @@ CREATE TABLE employees
     last_name   VARCHAR(30) NOT NULL ,
     email       VARCHAR(150) NOT NULL ,
     card_number VARCHAR(16) NOT NULL ,
-    working     BOOLEAN NOT NULL
+    working     BOOLEAN NOT NULL,
+
+    CONSTRAINT check_email CHECK(email ~ '^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$')
 );
 
 CREATE TABLE transactions

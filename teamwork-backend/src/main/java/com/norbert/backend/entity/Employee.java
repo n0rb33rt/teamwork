@@ -6,10 +6,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 
 @Entity(name = "Employees")
-@Table(name = "employees")
+@Table(name = "employees", uniqueConstraints = {
+        @UniqueConstraint(name = "check_email", columnNames = {"email"})
+})
 @Getter
 @Setter
 @Builder
@@ -37,16 +40,20 @@ public class Employee {
     @JsonProperty("first_name")
     @NotNull
     @NotBlank
+    @Length(min = 2,max = 30)
     private String firstName;
 
     @JsonProperty("last_name")
     @NotNull
     @NotBlank
+    @Length(min = 2,max = 30)
     private String lastName;
 
     @JsonProperty("email")
     @NotNull
     @NotBlank
+    @Column(unique = true)
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", message = "Invalid email format")
     private String email;
 
     @JsonProperty("card_number")
