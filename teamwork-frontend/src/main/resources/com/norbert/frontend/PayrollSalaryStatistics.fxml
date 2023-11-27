@@ -12,7 +12,7 @@
     <children>
         <TableView id="tableView" fx:id="tableView" prefHeight="400" prefWidth="300">
             <columns>
-                <TableColumn fx:id="employee" resizable="false" text="Employee" styleClass="centered" reorderable="false" prefWidth="200">
+                <TableColumn fx:id="employee" resizable="false" text="Employee" styleClass="centered" reorderable="false" prefWidth="200" sortable="false">
                     <cellValueFactory>
                         <PropertyValueFactory property="employee"/>
                     </cellValueFactory>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane prefHeight="200" prefWidth="230" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.norbert.frontend.controller.TransactionDialogController">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.0" minWidth="0.0" prefWidth="51.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.2" minWidth="10.0" prefWidth="178.2" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints maxHeight="41.8" minHeight="0.0" prefHeight="38.8" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="49.000000953674316" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="91.19999999999999" minHeight="10.0" prefHeight="70.40000000000002" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="137.99999999999997" minHeight="0.0" prefHeight="45.599999999999994" vgrow="SOMETIMES" />
+      <RowConstraints />
+    </rowConstraints>
+    <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <DatePicker fx:id="datePicker" editable="false" prefHeight="26.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <Label prefHeight="18.0" prefWidth="41.0" text="Order:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <ComboBox fx:id="orderTypeComboBox" prefHeight="26.0" prefWidth="176.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Workers:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <ListView fx:id="workersView" prefHeight="66.0" prefWidth="111.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+
+    </ListView>
+
+    <Button fx:id="addButton" onAction="#handleAddButtonClick" prefHeight="26.0" prefWidth="63.0" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <GridPane.margin>
+         <Insets left="20.0" />
+      </GridPane.margin></Button>
+    <Button onAction="#handleCancelButton" prefHeight="26.0" prefWidth="63.0" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <GridPane.margin>
+         <Insets left="100.0" />
+      </GridPane.margin></Button>
+
+</GridPane>

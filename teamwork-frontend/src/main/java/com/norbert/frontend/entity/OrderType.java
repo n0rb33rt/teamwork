@@ -5,8 +5,8 @@ public enum OrderType {
     BODY_AND_INTERIOR_WASH(350,"Мийка кузову та салону"),
     DRY_CLEANING(1800,"Хімчистка");
 
-    private Integer price;
-    private String name;
+    private final Integer price;
+    private final String name;
 
     OrderType(Integer price, String name) {
         this.price = price;

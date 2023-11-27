@@ -9,43 +9,44 @@
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.norbert.frontend.controller.PayrollTransactionStatisticsController">
 
-    <children>
-        <TableView id="tableView" fx:id="tableView" prefHeight="400" prefWidth="1040">
-            <columns>
-                <TableColumn fx:id="id" resizable="false" text="Id" styleClass="centered" reorderable="false" prefWidth="135">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="id"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="employee" resizable="false" text="Employee" styleClass="centered" reorderable="false" prefWidth="150">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="employee"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="employees" resizable="false" text="Working employees"  sortable="false" styleClass="centered" reorderable="false" prefWidth="350">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="employees"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="orderType" resizable="false" text="Order type" sortable="false" styleClass="centered" reorderable="false" prefWidth="180">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="orderType"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="price" resizable="false" text="Price" sortable="false" styleClass="centered" reorderable="false" prefWidth="90">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="price"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="date" resizable="false" text="Date" styleClass="centered" reorderable="false" prefWidth="135">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="date"/>
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-        </TableView>
-    </children>
     <stylesheets>
-        <URL value="@styles.css" />
+        <URL value="@styles.css"/>
     </stylesheets>
+    <TableView id="tableView" fx:id="tableView" prefHeight="400" prefWidth="1040">
+        <columns>
+            <TableColumn resizable="false" text="Id" styleClass="centered" reorderable="false" prefWidth="135" sortable="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="id"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn resizable="false" text="Employee" styleClass="centered" reorderable="false" prefWidth="150" sortable="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="employee"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn resizable="false" text="Working employees" sortable="false" styleClass="centered"
+                         reorderable="false" prefWidth="350">
+                <cellValueFactory>
+                    <PropertyValueFactory property="employees"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn resizable="false" text="Order type" sortable="false" styleClass="centered" reorderable="false"
+                         prefWidth="180">
+                <cellValueFactory>
+                    <PropertyValueFactory property="orderType"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn resizable="false" text="Price" sortable="false" styleClass="centered" reorderable="false"
+                         prefWidth="90">
+                <cellValueFactory>
+                    <PropertyValueFactory property="price"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn resizable="false" text="Date" styleClass="centered" reorderable="false" prefWidth="135" sortable="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="date"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
 </GridPane>

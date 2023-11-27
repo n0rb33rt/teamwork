@@ -4,6 +4,7 @@ module com.norbert.frontend {
     requires okhttp3;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires com.google.gson;
 
     opens com.norbert.frontend to javafx.fxml;
     exports com.norbert.frontend;
