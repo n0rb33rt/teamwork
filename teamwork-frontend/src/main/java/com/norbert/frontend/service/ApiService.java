@@ -113,7 +113,7 @@ public class ApiService {
 
 
     public static Transaction saveTransaction(Transaction transaction) throws IOException {
-        String jsonRequest = objectMapper.writeValueAsString(transaction);
+        String jsonRequest = JsonRequestBuilder.buildTransactionJson(transaction);
         return post("/transaction", jsonRequest, Transaction.class);
     }
     public static List<Transaction> getAllTransactions() throws IOException {
@@ -124,20 +124,15 @@ public class ApiService {
         delete("/transaction/" + id);
     }
 
-    public static void updateTransaction(Transaction transaction) throws IOException {
-        String jsonRequest = objectMapper.writeValueAsString(transaction);
-        put("/transaction", jsonRequest);
-    }
 
-    // Salary methods
     public static PaySalary paySalary() throws IOException {
         return post("/salary", "", PaySalary.class);
     }
 
-    // Employee methods
+
 
     public static Employee saveEmployee(Employee employee) throws IOException {
-        String jsonRequest = objectMapper.writeValueAsString(employee);
+        String jsonRequest = JsonRequestBuilder.buildEmployeeJson(employee);
         return post("/employee", jsonRequest, Employee.class);
     }
 
@@ -146,7 +141,7 @@ public class ApiService {
     }
 
     public static void updateEmployee(Employee employee) throws IOException {
-        String jsonRequest = objectMapper.writeValueAsString(employee);
+        String jsonRequest = JsonRequestBuilder.buildEmployeeJson(employee);
         put("/employee", jsonRequest);
     }
     public static List<Employee> getAllEmployees() throws IOException {

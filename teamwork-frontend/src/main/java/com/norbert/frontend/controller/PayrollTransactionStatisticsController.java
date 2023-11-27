@@ -27,7 +27,6 @@ public class PayrollTransactionStatisticsController {
 
     private void updateTableView() {
         tableView.getItems().clear();
-
         for (Map.Entry<String, List<Transaction>> entry : employeeTransactionsMap.entrySet()) {
             for (Transaction transaction : entry.getValue()) {
                 tableView.getItems().add(new TransactionEntry(
@@ -117,6 +116,5 @@ public class PayrollTransactionStatisticsController {
                     "price=" + price + ", " +
                     "date=" + date + ']';
         }
-
-        }
+    }
 }

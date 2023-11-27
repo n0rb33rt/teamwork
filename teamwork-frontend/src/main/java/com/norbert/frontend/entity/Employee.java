@@ -33,6 +33,13 @@ public class Employee {
         this.cardNumber = cardNumber;
     }
 
+    public Employee(String firstName, String lastName, String email, String cardNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.cardNumber = cardNumber;
+    }
+
     public Employee() {
     }
 

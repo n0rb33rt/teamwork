@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane prefHeight="160.0" prefWidth="350" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.norbert.frontend.controller.EmployeeDialogController">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.0" minWidth="0.0" prefWidth="83.4" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="322.20000381469725" minWidth="10.0" prefWidth="266.6" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints maxHeight="137.99999999999997" minHeight="0.0" prefHeight="33.6" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="137.99999999999997" minHeight="0.0" prefHeight="31.6" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="81.4" minHeight="27.0" prefHeight="29.0" />
+      <RowConstraints maxHeight="73.6" minHeight="26.599999999999994" prefHeight="31.60000000000001" />
+      <RowConstraints maxHeight="73.4" minHeight="31.400000000000006" prefHeight="42.79999999999998" />
+    </rowConstraints>
+
+    <Label text="First Name:" GridPane.columnIndex="0" />
+    <TextField fx:id="firstNameTextField" prefHeight="26.0" prefWidth="175.0" GridPane.columnIndex="1" />
+
+    <Label text="Last Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="lastNameTextField" prefHeight="26.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="emailTextField" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="Card Number:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <TextField fx:id="cardNumberTextField" prefHeight="26.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <Button fx:id="addButton" onAction="#handleAddButtonClick" prefHeight="26.0" prefWidth="63.0" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <GridPane.margin>
+            <Insets left="20.0" />
+        </GridPane.margin>
+    </Button>
+    <Button onAction="#handleCancelButton" prefHeight="26.0" prefWidth="63.0" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <GridPane.margin>
+            <Insets left="100.0" />
+        </GridPane.margin>
+    </Button>
+</GridPane>

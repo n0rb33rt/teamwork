@@ -1,32 +1,26 @@
 package com.norbert.frontend.controller;
 
-
 import com.norbert.frontend.Application;
 import com.norbert.frontend.dialog.AlertDialog;
-import com.norbert.frontend.entity.Employee;
-import com.norbert.frontend.entity.OrderType;
 import com.norbert.frontend.entity.PaySalary;
 import com.norbert.frontend.entity.Transaction;
 import com.norbert.frontend.exception.ApiServiceException;
 import com.norbert.frontend.service.ApiService;
+import com.norbert.frontend.service.IconUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Pair;
+
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
 
 
 public class TransactionController {
-    private final static Image icon = new Image(Objects.requireNonNull(Application.class.getResourceAsStream("icon.png")));
 
     @FXML
     private TableView<Transaction> tableView;
@@ -35,11 +29,28 @@ public class TransactionController {
     public void initialize() {
         handleRefreshButtonAction();
     }
-
     @FXML
-    private void handleEditAction() {
-        Transaction selectedTransaction = tableView.getSelectionModel().getSelectedItem();
-        //todo:
+    private void handleAddTransactionButtonAction() {
+        openTransactionDialog("Adding a Transaction");
+    }
+
+    private void openTransactionDialog(String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Application.class.getResource("TransactionDialog.fxml"));
+            GridPane root = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.getIcons().add(IconUtil.MAIN_ICON);
+            dialogStage.setTitle(title);
+            dialogStage.setResizable(false);
+            TransactionDialogController controller = loader.getController();
+            controller.setStage(dialogStage);
+            dialogStage.showAndWait();
+            handleRefreshButtonAction();
+        } catch (IOException e) {
+            AlertDialog.showErrorDialog("Error",e.getMessage());
+        }
     }
 
     @FXML
@@ -54,16 +65,13 @@ public class TransactionController {
         }
     }
 
-    @FXML
-    private void handleAddTransactionButtonAction() {
 
-    }
 
     @FXML
     private void handleEmployeesButtonAction() throws IOException {
         FXMLLoader salaryStatisticsLoader = new FXMLLoader(Application.class.getResource("EmployeeView.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(icon);
+        stage.getIcons().add(IconUtil.MAIN_ICON);
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Employees");
@@ -90,7 +98,7 @@ public class TransactionController {
     private void showSalaryStatistics(PaySalary paySalary) throws IOException {
         FXMLLoader salaryStatisticsLoader = new FXMLLoader(Application.class.getResource("PayrollSalaryStatistics.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(icon);
+        stage.getIcons().add(IconUtil.MAIN_ICON);
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Payroll Salary Statistics");
@@ -105,7 +113,7 @@ public class TransactionController {
     private void showTransactionStatistics(PaySalary paySalary) throws IOException {
         FXMLLoader transactionStatisticsLoader = new FXMLLoader(Application.class.getResource("PayrollTransactionStatistics.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(icon);
+        stage.getIcons().add(IconUtil.MAIN_ICON);
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Payroll Transaction Statistics");

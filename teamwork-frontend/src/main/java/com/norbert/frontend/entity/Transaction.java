@@ -1,14 +1,15 @@
 package com.norbert.frontend.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 public class Transaction{
     @JsonProperty("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long id;
     @JsonProperty("employees")
     private List<Employee> employees;
@@ -72,18 +73,12 @@ public class Transaction{
 
     @Override
     public String toString() {
-        return "{\n" +
-                "    \"date\": \""+ date +"\",\n" +
-                "    \"orderType\": \""+orderType+"\",\n" +
-                "    \"employees\": [\n" +
-                "        {   \n" +
-                "            \"id\":1\n" +
-                "        },\n" +
-                "{\n" +
-                "    \"id\":2\n" +
-                "}\n" +
-                "    ]\n" +
-                "}";
+        return "Transaction{" +
+                "id=" + id +
+                ", employees=" + employees +
+                ", orderType=" + orderType +
+                ", date=" + date +
+                '}';
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.norbert.frontend.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.nio.DoubleBuffer;
 import java.util.List;
 import java.util.Map;
 
