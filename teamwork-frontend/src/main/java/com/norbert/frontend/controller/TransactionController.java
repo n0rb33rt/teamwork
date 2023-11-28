@@ -8,6 +8,7 @@ import com.norbert.frontend.exception.ApiServiceException;
 import com.norbert.frontend.service.ApiService;
 import com.norbert.frontend.service.IconUtil;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.io.IOException;
@@ -83,17 +85,88 @@ public class TransactionController {
 
     @FXML
     private void handlePaySalaryButtonAction() {
+        Alert loadingAlert = createLoadingAlert();
+
+        Task<PaySalary> task = createPaySalaryTask(loadingAlert);
+
+        configureTaskHandlers(task, loadingAlert);
+
+        loadingAlert.show();
+        new Thread(task).start();
+    }
+
+    private Alert createLoadingAlert() {
+        Alert loadingAlert = new Alert(Alert.AlertType.NONE, "Loading...", ButtonType.CLOSE);
+        loadingAlert.initStyle(StageStyle.UNDECORATED);
+        loadingAlert.initModality(Modality.APPLICATION_MODAL);
+        return loadingAlert;
+    }
+
+    private Task<PaySalary> createPaySalaryTask(Alert loadingAlert) {
+        return new Task<>() {
+            @Override
+            protected PaySalary call() throws Exception {
+                return ApiService.paySalary();
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                loadingAlert.setResult(ButtonType.OK);
+                loadingAlert.close();
+                handlePaySalarySuccess(getValue());
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                loadingAlert.setResult(ButtonType.OK);
+                loadingAlert.close();
+                handlePaySalaryFailure(getException());
+            }
+        };
+    }
+
+    private void configureTaskHandlers(Task<PaySalary> task, Alert loadingAlert) {
+        task.setOnSucceeded(event -> {
+            loadingAlert.setResult(ButtonType.OK);
+            loadingAlert.close();
+            handlePaySalarySuccess(task.getValue());
+        });
+
+        task.setOnFailed(event -> {
+            loadingAlert.setResult(ButtonType.OK);
+            loadingAlert.close();
+            handlePaySalaryFailure(task.getException());
+        });
+    }
+
+    private void handlePaySalarySuccess(PaySalary paySalary) {
+        AlertDialog.showSuccessDialog("Success", "Successfully paid salary");
         try {
-            PaySalary paySalary = ApiService.paySalary();
-            AlertDialog.showSuccessDialog("Success","Successfully paid salary");
             showSalaryStatistics(paySalary);
             showTransactionStatistics(paySalary);
         } catch (IOException e) {
-            AlertDialog.showErrorDialog("Error loading FXML file", "There was an error loading the FXML file.");
-        } catch (ApiServiceException e) {
-            AlertDialog.showErrorDialog("API Service Error", "There was an error with the API service: " + e.getMessage());
+            handleException(e, "Error loading FXML file");
         }
     }
+
+    private void handlePaySalaryFailure(Throwable exception) {
+        if (exception instanceof IOException) {
+            handleException((IOException) exception, "Error loading FXML file");
+        } else if (exception instanceof ApiServiceException) {
+            handleException((ApiServiceException) exception, "API Service Error");
+        }
+    }
+
+    private void handleException(IOException e, String title) {
+        AlertDialog.showErrorDialog(title, "There was an error: " + e.getMessage());
+    }
+
+    private void handleException(ApiServiceException e, String title) {
+        AlertDialog.showErrorDialog(title, "There was an error with the API service: " + e.getMessage());
+    }
+
 
     private void showSalaryStatistics(PaySalary paySalary) throws IOException {
         FXMLLoader salaryStatisticsLoader = new FXMLLoader(Application.class.getResource("PayrollSalaryStatistics.fxml"));

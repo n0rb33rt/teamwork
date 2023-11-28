@@ -57,7 +57,7 @@ public class TransactionDialogController {
         workersView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         addButton.setDisable(true);
         try {
-            ObservableList<Employee> employees = FXCollections.observableList(ApiService.getAllEmployees());
+            ObservableList<Employee> employees = FXCollections.observableList(ApiService.getAllEmployees().stream().filter(Employee::isWorking).collect(Collectors.toList()));
             employees.forEach(employee -> employee.selectedProperty().addListener((obs, oldSelected, newSelected) -> handleChanges()));
             workersView.setItems(employees);
         } catch (IOException | ApiServiceException e) {

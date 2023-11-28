@@ -95,7 +95,7 @@ public class Employee {
         this.selected.set(selected);
     }
 
-    public Boolean getWorking() {
+    public Boolean isWorking() {
         return working;
     }
 

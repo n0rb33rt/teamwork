@@ -117,7 +117,6 @@ public class ApiService {
     public static Transaction saveTransaction(Transaction transaction) throws IOException {
         JsonObject jsonObject = JsonRequestBuilder.buildTransactionJson(transaction);
         String jsonRequest =  new Gson().toJson(jsonObject);
-        System.out.println(jsonRequest);
         return post("/transaction", jsonRequest, Transaction.class);
     }
     public static List<Transaction> getAllTransactions() throws IOException {
