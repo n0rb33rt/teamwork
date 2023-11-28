@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.norbert.frontend.entity.Employee;
 import com.norbert.frontend.entity.PaySalary;
 import com.norbert.frontend.entity.Transaction;
@@ -113,7 +115,9 @@ public class ApiService {
 
 
     public static Transaction saveTransaction(Transaction transaction) throws IOException {
-        String jsonRequest = JsonRequestBuilder.buildTransactionJson(transaction);
+        JsonObject jsonObject = JsonRequestBuilder.buildTransactionJson(transaction);
+        String jsonRequest =  new Gson().toJson(jsonObject);
+        System.out.println(jsonRequest);
         return post("/transaction", jsonRequest, Transaction.class);
     }
     public static List<Transaction> getAllTransactions() throws IOException {
@@ -132,7 +136,8 @@ public class ApiService {
 
 
     public static Employee saveEmployee(Employee employee) throws IOException {
-        String jsonRequest = JsonRequestBuilder.buildEmployeeJson(employee);
+        JsonObject jsonObject = JsonRequestBuilder.buildEmployeeJson(employee);
+        String jsonRequest =  new Gson().toJson(jsonObject);
         return post("/employee", jsonRequest, Employee.class);
     }
 
@@ -141,7 +146,8 @@ public class ApiService {
     }
 
     public static void updateEmployee(Employee employee) throws IOException {
-        String jsonRequest = JsonRequestBuilder.buildEmployeeJson(employee);
+        JsonObject jsonObject = JsonRequestBuilder.buildEmployeeJson(employee);
+        String jsonRequest =  new Gson().toJson(jsonObject);
         put("/employee", jsonRequest);
     }
     public static List<Employee> getAllEmployees() throws IOException {
